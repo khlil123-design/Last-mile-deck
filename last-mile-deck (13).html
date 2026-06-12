@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Last Mile — Pitch Deck</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
+  :root {
+    --bg: #0a0a0a;
+    --bg-soft: #111111;
+    --cream: #f2efe9;
+    --cream-dim: rgba(242,239,233,0.62);
+    --cream-faint: rgba(242,239,233,0.38);
+    --line: rgba(242,239,233,0.16);
+    --line-soft: rgba(242,239,233,0.09);
+    --yellow: #f5c542;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #000;
+    font-family: var(--sans);
+    color: var(--cream);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .deck { width: 100vw; height: 100vh; position: relative; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    background: var(--bg);
+    display: none;
+    flex-direction: column;
+    padding: 4.5vh 5vw;
+    overflow: hidden;
+  }
+  .slide.active { display: flex; animation: fadeIn .45s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: none;} }
+
+  /* ---------- shared elements ---------- */
+  .kicker {
+    font-size: clamp(10px, 1.1vw, 12px);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 2.8vh;
+  }
+  .kicker .num { color: var(--cream-dim); }
+  .kicker .rule { flex: 0 0 48px; height: 1px; background: var(--line); }
+
+  h1, h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+  }
+  em { font-style: italic; }
+
+  .footer {
+    margin-top: auto;
+    padding-top: 2.2vh;
+    border-top: 1px solid var(--line-soft);
+    display: flex;
+    justify-content: space-between;
+    font-size: clamp(9px, 1vw, 11px);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+  }
+
+  /* ---------- slide 1 : cover ---------- */
+  .cover { padding-top: 16vh; padding-bottom: 3vh; }
+  .cover .meta-top {
+    position: absolute; top: 4.5vh; left: 5vw; right: 5vw;
+    display: flex; justify-content: space-between;
+    font-size: clamp(9px, 1vw, 11px);
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-faint);
+    padding-bottom: 2vh;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .cover-main {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 4vw;
+    align-items: stretch;
+  }
+  .cover h1 {
+    font-size: clamp(30px, 5vw, 64px);
+    max-width: 16ch;
+  }
+  .cover .sub {
+    margin-top: 3.5vh;
+    font-size: clamp(13px, 1.5vw, 18px);
+    font-weight: 300;
+    color: var(--cream-dim);
+    max-width: 46ch;
+    line-height: 1.65;
+  }
+  .cover-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5vh;
+    padding-left: 2.5vw;
+    border-left: 1px solid var(--line-soft);
+  }
+  .cover .conviction {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(20px, 2.6vw, 34px);
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    color: var(--yellow);
+    max-width: 18ch;
+    text-align: center;
+    margin-top: auto;
+  }
+  .nairobi-art { width: 100%; max-width: 380px; height: auto; opacity: 0.9; margin-top: auto; }
+  .cover .tags {
+    margin-top: auto;
+    display: flex; gap: 0; flex-wrap: wrap;
+    font-size: clamp(9px, 1vw, 11px);
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim);
+  }
+  .cover .tags span { padding: 10px 22px; border: 1px solid var(--line); border-right: none; }
+  .cover .tags span:last-child { border-right: 1px solid var(--line); }
+  .cover .footer { margin-top: auto; }
+
+  /* ---------- slide 2 : the case ---------- */
+  .case-head h2 { font-size: clamp(20px, 3vw, 40px); white-space: nowrap; }
+  .case-head .case-sub {
+    font-size: clamp(12px, 1.3vw, 16px);
+    font-weight: 300;
+    color: var(--cream-dim);
+    letter-spacing: 0.04em;
+    margin-top: 1.2vh;
+  }
+  .case-art {
+    position: absolute;
+    top: 4.5vh;
+    right: 5vw;
+    width: clamp(190px, 22vw, 320px);
+    height: auto;
+  }
+  .case-grid {
+    margin-top: 4vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--line-soft);
+    border-left: 1px solid var(--line-soft);
+    flex: 1;
+  }
+  .case-cell {
+    border-right: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+    padding: 2.6vh 2vw;
+    display: flex; flex-direction: column; gap: 1.2vh;
+  }
+  .case-cell .n { font-size: clamp(10px,1vw,12px); letter-spacing: .2em; color: var(--yellow); }
+  .case-cell h3 { font-family: var(--serif); font-weight: 500; font-size: clamp(16px, 1.9vw, 23px); }
+  .case-cell p { font-size: clamp(11px, 1.2vw, 14px); font-weight: 300; line-height: 1.6; color: var(--cream-dim); }
+
+  /* ---------- slide 3 : what is last mile ---------- */
+  .what-wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 4vw; flex: 1; align-items: stretch; }
+  .what-left { display: flex; flex-direction: column; }
+  .what-left h2 { font-size: clamp(26px, 3.8vw, 48px); }
+  .what-left p { margin-top: 3vh; font-size: clamp(12px, 1.35vw, 16px); font-weight: 300; line-height: 1.7; color: var(--cream-dim); max-width: 46ch; text-align: justify; }
+  .fund-types {
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+    align-items: center;
+    gap: 1.2vw;
+  }
+  .fund-types .ft {
+    border: 1px solid var(--yellow);
+    color: var(--yellow);
+    padding: 18px 28px;
+    font-size: clamp(10px, 1.15vw, 14px);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .fund-types .ft .ftn { display: block; font-size: clamp(9px,.95vw,11px); letter-spacing: .22em; color: var(--cream-faint); margin-bottom: 8px; }
+  .fund-types .amp { font-family: var(--serif); font-style: italic; font-size: clamp(20px,2.2vw,28px); color: var(--yellow); }
+  .what-right { display: flex; flex-direction: column; }
+  .what-item { padding: 2.1vh 0; border-bottom: 1px solid var(--line-soft); display: flex; gap: 1.6vw; align-items: baseline; flex: 1; }
+  .what-item:first-child { border-top: 1px solid var(--line-soft); }
+  .what-item:last-child { border-bottom: none; }
+  .what-item .n { font-size: clamp(10px,1vw,12px); letter-spacing: .2em; color: var(--yellow); flex: 0 0 2.2em; }
+  .what-item h3 { font-family: var(--serif); font-weight: 500; font-size: clamp(15px,1.7vw,20px); margin-bottom: .5vh; }
+  .what-item p { font-size: clamp(11px,1.15vw,13.5px); font-weight: 300; line-height: 1.55; color: var(--cream-dim); }
+
+  /* ---------- slide 4 : agenda ---------- */
+  .agenda-head h2 { font-size: clamp(24px, 3.2vw, 42px); }
+  .agenda-grid {
+    margin-top: 3.4vh;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border-left: 1px solid var(--line-soft);
+    border-top: 1px solid var(--line-soft);
+    flex: 1;
+  }
+  .agenda-col { border-right: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); padding: 2.2vh 1.2vw; display: flex; flex-direction: column; gap: 1.1vh; }
+  .agenda-col .day { font-size: clamp(9px,.95vw,11px); letter-spacing: .2em; text-transform: uppercase; color: var(--cream-faint); display: flex; justify-content: space-between; }
+  .agenda-col .day .dn { color: var(--yellow); }
+  .agenda-col h3 { font-family: var(--serif); font-weight: 500; font-size: clamp(14px,1.6vw,19px); line-height: 1.15; min-height: 2.3em; }
+  .agenda-col ul { list-style: none; display: flex; flex-direction: column; gap: 1vh; margin-top: .5vh; }
+  .agenda-col li { font-size: clamp(10px,1.05vw,12.5px); font-weight: 300; line-height: 1.5; color: var(--cream-dim); padding-top: 1vh; border-top: 1px solid var(--line-soft); }
+  .agenda-col li .bp { display: block; }
+  .agenda-col li .bp + .bp { margin-top: .6vh; }
+  .agenda-art { width: 100%; height: auto; margin-top: auto; padding-top: 1.2vh; }
+  .agenda-col .fn { font-size: clamp(8px,.85vw,10px); font-weight: 300; color: var(--cream-dim); margin-top: .4vh; }
+
+  /* ---------- slide 5 : two funds ---------- */
+  .funds-head h2 { font-size: clamp(24px, 3.2vw, 42px); }
+  .funds-wrap {
+    margin-top: 3.4vh; flex: 1;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border-top: 1px solid var(--line-soft);
+    border-left: 1px solid var(--line-soft);
+  }
+  .fund {
+    border-right: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+    padding: 2.8vh 2vw;
+    display: flex; flex-direction: column;
+  }
+  .fund .label { font-size: clamp(9px,.95vw,11px); letter-spacing: .22em; text-transform: uppercase; color: var(--yellow); }
+  .fund h3 { font-family: var(--serif); font-weight: 500; font-size: clamp(20px,2.4vw,30px); margin-top: 1vh; }
+  .fund .sub { font-size: clamp(10px,1.05vw,12.5px); font-weight: 300; color: var(--cream-dim); margin-top: .6vh; }
+  .fund .blocks { margin-top: 2.4vh; display: flex; flex-direction: column; flex: 1; }
+  .block { padding: 1.9vh 0; border-top: 1px solid var(--line-soft); display: flex; gap: 1.4vw; }
+  .block .bn { font-size: clamp(10px,1vw,12px); letter-spacing: .18em; color: var(--yellow); flex: 0 0 2em; padding-top: .2em; }
+  .block h4 { font-family: var(--serif); font-weight: 500; font-style: italic; font-size: clamp(14px,1.55vw,18px); }
+  .block .dur { font-size: clamp(9px,.9vw,10.5px); letter-spacing: .16em; text-transform: uppercase; color: var(--yellow); margin-top: .4vh; }
+  .block p { font-size: clamp(10.5px,1.1vw,13px); font-weight: 300; line-height: 1.55; color: var(--cream-dim); margin-top: .7vh; }
+
+  /* ---------- slide 6 : faculty ---------- */
+  .fac-head h2 { font-size: clamp(24px, 3.2vw, 42px); }
+  .fac-wrap { margin-top: 3.4vh; flex: 1; min-height: 0; display: grid; grid-template-columns: 2.8fr 1fr; grid-template-rows: minmax(0,1fr) minmax(0,1fr); gap: 1.5vh 3vw; overflow: hidden; }
+  .fac {
+    border-top: 1px solid var(--line); padding-top: 2.4vh;
+    display: flex; flex-direction: column; gap: 1.2vh;
+    min-height: 0; overflow: hidden;
+  }
+  .fac .role { font-size: clamp(9px,.95vw,11px); letter-spacing: .2em; text-transform: uppercase; color: var(--cream-faint); }
+  .fac h3 { font-family: var(--serif); font-weight: 500; font-size: clamp(20px,2.4vw,30px); }
+  .fac p { font-size: clamp(11px,1.2vw,14px); font-weight: 300; line-height: 1.65; color: var(--cream-dim); }
+  .fac .creds { padding-top: 1.6vh; font-size: clamp(9.5px,1vw,11.5px); letter-spacing: .08em; color: var(--cream-faint); line-height: 1.7; border-top: 1px solid var(--line-soft); }
+  .fac-photo-cell { border-top: 1px solid var(--line); padding-top: 2.4vh; min-height: 0; display: flex; align-items: flex-start; justify-content: center; overflow: hidden; }
+  .fac-photo-cell img { width: 50%; height: auto; object-fit: cover; object-position: center top; opacity: 0.92; display: block; }
+
+  /* ---------- slide 7 : cta ---------- */
+  .cta { justify-content: flex-start; align-items: flex-start; }
+  .cta-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; flex: 1; align-items: start; width: 100%; }
+  .cta-left { display: flex; flex-direction: column; }
+  .cta h2 { font-size: clamp(30px, 4.5vw, 60px); }
+  .cta .sub { margin-top: 0; font-size: clamp(11px,1.3vw,15px); font-weight: 300; line-height: 1.7; color: var(--cream-dim); max-width: 100%; }
+  .price-block {
+    margin-top: 3.5vh;
+    padding: 2.2vh 2vw;
+    border: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    align-self: flex-start;
+    min-width: 28ch;
+  }
+  .price-label { font-size: clamp(9px,1vw,11px); letter-spacing: 0.22em; text-transform: uppercase; color: var(--cream-faint); }
+  .price-amount { font-family: var(--serif); font-weight: 400; font-size: clamp(32px,4vw,54px); line-height: 1; color: var(--yellow); letter-spacing: -0.01em; }
+  .cta .pills {
+    margin-top: 3.5vh; display: flex; flex-wrap: wrap;
+    font-size: clamp(9px,1vw,11px); letter-spacing: .18em; text-transform: uppercase; color: var(--yellow);
+  }
+  .cta .pills span { padding: 10px 22px; border: 1px solid var(--yellow); border-right: none; }
+  .cta .pills span:last-child { border-right: 1px solid var(--yellow); }
+  .cta .contact { margin-top: 3vh; font-size: clamp(11px,1.25vw,15px); font-weight: 300; color: var(--cream); }
+  .cta .contact .mail { color: var(--cream-dim); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+  .cities-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--line-soft);
+    border-left: 1px solid var(--line-soft);
+  }
+  .city-cell {
+    border-right: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+    display: flex; flex-direction: column;
+  }
+  .city-img {
+    width: 100%; height: 32vh;
+    background: var(--bg-soft);
+    border-bottom: 1px solid var(--line-soft);
+    overflow: hidden;
+  }
+  .city-label { padding: 1.4vh 1.2vw; }
+  .city-label .city-name { font-family: var(--serif); font-weight: 500; font-size: clamp(14px,1.6vw,20px); }
+  .city-label .city-period { font-size: clamp(9px,.95vw,11px); letter-spacing: .14em; text-transform: uppercase; color: var(--yellow); margin-top: .4vh; }
+
+  /* ---------- navigation ---------- */
+  .nav {
+    position: fixed; bottom: 18px; right: 22px;
+    display: flex; align-items: center; gap: 14px;
+    z-index: 10; user-select: none;
+  }
+  .nav button {
+    background: transparent; border: 1px solid var(--line); color: var(--cream-dim);
+    width: 34px; height: 34px; cursor: pointer; font-size: 14px;
+    transition: all .2s;
+  }
+  .nav button:hover { border-color: var(--cream-dim); color: var(--cream); }
+  .progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--cream-dim); z-index: 10; transition: width .35s ease; }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+  <!-- 1 · COVER -->
+  <section class="slide cover active">
+    <div class="meta-top">
+      <span>Last Mile · Field Program № 01</span>
+      <span>Nairobi, Kenya · 1.2921°S 36.8219°E</span>
+    </div>
+    <div class="cover-main">
+      <div>
+        <h1>The frontier, <em>witnessed</em> first-hand.</h1>
+        <p class="sub">A four-day, in-country collaborative due diligence program for principals investing in frontier and emerging markets.</p>
+      </div>
+      <div class="cover-right">
+        <div class="conviction">True conviction is built on the ground.</div>
+        <svg class="nairobi-art" viewBox="0 0 460 240" xmlns="http://www.w3.org/2000/svg" aria-label="Nairobi skyline with acacia tree and giraffe">
+          <circle cx="338" cy="96" r="46" fill="#f5c542" opacity="0.85"/>
+          <g fill="rgba(242,239,233,0.30)">
+            <rect x="36" y="124" width="22" height="66"/>
+            <rect x="66" y="102" width="18" height="88"/>
+            <rect x="96" y="84" width="26" height="106" rx="4"/>
+            <ellipse cx="109" cy="84" rx="20" ry="6"/>
+            <rect x="132" y="112" width="20" height="78"/>
+            <rect x="160" y="132" width="24" height="58"/>
+            <polygon points="196,190 196,126 206,108 216,126 216,190"/>
+          </g>
+          <line x1="14" y1="190" x2="446" y2="190" stroke="rgba(242,239,233,0.35)" stroke-width="1.5"/>
+          <g fill="rgba(242,239,233,0.55)">
+            <path d="M388 190 L391 162 L380 146 L383 144 L393 158 L397 142 L401 143 L398 160 L412 147 L414 150 L399 165 L396 190 Z"/>
+            <path d="M352 146 Q386 122 424 144 Q428 148 420 149 Q388 136 358 151 Q348 151 352 146 Z"/>
+          </g>
+          <g fill="#f5c542">
+            <path d="M236 190 L239 152 Q233 146 235 137 Q244 127 257 130 L273 90 Q274 84 279 84 L280 76 L283 76 L283 84 Q289 85 291 91 L283 94 L268 134 Q270 141 266 147 L267 190 L263 190 L262 150 Q253 152 245 149 L242 190 Z"/>
+            <path d="M234 138 Q228 142 229 148 L232 147 Q231 142 235 140 Z"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="tags">
+      <span>2–6 November 2026</span>
+      <span>Nairobi, Kenya</span>
+    </div>
+    <div class="footer"><span>Last Mile</span><span>01 / 07</span></div>
+  </section>
+
+  <!-- 2 · THE CASE -->
+  <section class="slide">
+    <div class="kicker"><span class="num">02</span><span class="rule"></span><span>The Case</span></div>
+    <div class="case-head">
+      <h2>Conviction cannot be bought from a desk.</h2>
+      <p class="case-sub">Frontier markets reward conviction.</p>
+    </div>
+    <svg class="case-art" viewBox="0 0 340 150" xmlns="http://www.w3.org/2000/svg" aria-label="Expertise and direct exposure overlapping — collaboration meeting the field">
+      <defs><clipPath id="lensClipS2"><circle cx="148" cy="84" r="46"/></clipPath></defs>
+      <circle cx="192" cy="84" r="46" fill="#f5c542" opacity="0.85" clip-path="url(#lensClipS2)"/>
+      <circle cx="148" cy="84" r="46" fill="none" stroke="rgba(242,239,233,0.5)" stroke-width="1.5"/>
+      <circle cx="192" cy="84" r="46" fill="none" stroke="rgba(242,239,233,0.5)" stroke-width="1.5"/>
+      <path d="M170 46 v-14 M170 36 q-8 -2 -10 -10 q10 0 10 10 M170 32 q8 -2 10 -10 q-10 0 -10 10" fill="none" stroke="#f5c542" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="30" y1="130" x2="310" y2="130" stroke="rgba(242,239,233,0.4)" stroke-width="1.5"/>
+      <text x="94" y="88" text-anchor="end" font-family="Inter, sans-serif" font-size="11" letter-spacing="1.5" fill="rgba(242,239,233,0.62)">EXPERTISE</text>
+      <text x="246" y="83" text-anchor="start" font-family="Inter, sans-serif" font-size="11" letter-spacing="1.5" fill="rgba(242,239,233,0.62)">DIRECT</text>
+      <text x="246" y="97" text-anchor="start" font-family="Inter, sans-serif" font-size="11" letter-spacing="1.5" fill="rgba(242,239,233,0.62)">EXPOSURE</text>
+    </svg>
+    <div class="case-grid">
+      <div class="case-cell">
+        <span class="n">01</span>
+        <h3>The information gap is structural</h3>
+        <p>Public data is thin, lagging, and frequently incomplete. Diligence built on third-party reports inherits every blind spot of the stakeholders who wrote them.</p>
+      </div>
+      <div class="case-cell">
+        <span class="n">02</span>
+        <h3>Narrative is shaped by intermediairies</h3>
+        <p>By the time a deal reaches a family office, it has passed through layers of incentive. You see the story the deal wants you to see.</p>
+      </div>
+      <div class="case-cell">
+        <span class="n">03</span>
+        <h3>Risk is mispriced in both directions</h3>
+        <p>Headline risk inflates perceived danger while operational risk hides in plain sight. Neither is legible without being in the room.</p>
+      </div>
+      <div class="case-cell">
+        <span class="n">04</span>
+        <h3>Expertise is expensive to build alone</h3>
+        <p>Developing real emerging-market diligence capability is costly and slow. Working collaboratively, a cohort builds it in 4 days.</p>
+      </div>
+    </div>
+    <div class="footer"><span>Last Mile</span><span>02 / 07</span></div>
+  </section>
+
+  <!-- 3 · WHAT IS LAST MILE -->
+  <section class="slide">
+    <div class="kicker"><span class="num">03</span><span class="rule"></span><span>What is Last Mile?</span></div>
+    <div class="what-wrap">
+      <div class="what-left">
+        <h2>An expedition in diligence</h2>
+        <p>Last Mile brings 8–10 vetted principals into a single frontier market for four immersive days. You conduct guided due diligence on live, fundraising impact funds (financial and impact dimensions in depth), visit investee companies on the ground, and decide whether you would commit capital.</p>
+        <div class="fund-types">
+          <div class="ft"><span class="ftn">Fund I</span>Private Equity Fund</div>
+          <span class="amp">&amp;</span>
+          <div class="ft"><span class="ftn">Fund II</span>Venture Capital Fund</div>
+        </div>
+      </div>
+      <div class="what-right">
+        <div class="what-item">
+          <span class="n">01</span>
+          <div><h3>Guided fund due diligence</h3><p>A structured DD and impact framework applied to two live impact funds, under real-world conditions. [Private equity &amp; venture capital]</p></div>
+        </div>
+        <div class="what-item">
+          <span class="n">02</span>
+          <div><h3>On-the-ground access</h3><p>Visits to investee companies and projects; sessions with local experts on the regional investment environment and political economy.</p></div>
+        </div>
+        <div class="what-item">
+          <span class="n">03</span>
+          <div><h3>Practical tools</h3><p>Ready-to-use DD templates and frameworks that accelerate internal decision cycles long after the program.</p></div>
+        </div>
+        <div class="what-item">
+          <span class="n">04</span>
+          <div><h3>A durable network</h3><p>Peer investors and trusted local partners. These relationships are built for future co-investment and deal flow.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>Last Mile</span><span>03 / 07</span></div>
+  </section>
+
+  <!-- 4 · AGENDA -->
+  <section class="slide">
+    <div class="kicker"><span class="num">04</span><span class="rule"></span><span>Program Agenda</span></div>
+    <div class="agenda-head"><h2>Five days on the ground <em>in Nairobi.</em></h2></div>
+    <div class="agenda-grid">
+
+      <div class="agenda-col">
+        <div class="day"><span>Mon</span><span class="dn">00</span></div>
+        <h3>Arrival</h3>
+        <ul>
+          <li>Private arrival &amp; hotel check-in</li>
+          <li>Decompression</li>
+          <li>Informal welcome dinner with fellow participants</li>
+        </ul>
+        <svg class="agenda-art" viewBox="0 0 140 70" xmlns="http://www.w3.org/2000/svg" aria-label="Plane arriving">
+          <path d="M10 56 Q55 14 112 20" fill="none" stroke="#f5c542" stroke-width="1.5" stroke-dasharray="4 5" opacity="0.6"/>
+          <path d="M104 12 L132 19 L110 33 L107 24 Z" fill="#f5c542"/>
+          <path d="M107 24 L114 21 L110 33 Z" fill="#f5c542" opacity="0.55"/>
+          <line x1="8" y1="62" x2="132" y2="62" stroke="rgba(242,239,233,0.35)" stroke-width="1.5"/>
+        </svg>
+      </div>
+
+      <div class="agenda-col">
+        <div class="day"><span>Tue</span><span class="dn">01</span></div>
+        <h3>Safari &amp; Kick-off</h3>
+        <ul>
+          <li>Open-air breakfast &amp; expert panel in Nairobi Central Park: how to think about EM venture &amp; PE investing</li>
+          <li>Fund I - manager session</li>
+          <li>Cocktails with the local investment ecosystem</li>
+        </ul>
+        <svg class="agenda-art" viewBox="0 0 200 70" xmlns="http://www.w3.org/2000/svg" aria-label="Safari animals">
+          <g fill="#f5c542">
+            <path d="M30 58 L32 36 Q28 33 29 28 Q34 22 42 24 L52 8 Q52.5 5 55 5 L55.5 2 L57 2 L57 5 Q60 5.5 61 8 L57 10 L48 28 Q49 32 47 35 L47.5 58 L45 58 L44.5 36 Q39 37 34 35.5 L33 58 Z"/>
+            <path d="M90 58 L92 42 Q88 30 102 26 Q118 21 128 29 Q138 27 142 34 Q145 39 142 43 L140 58 L135 58 L134 46 Q122 49 110 46 L109 58 L104 58 L103 44 Q95 43 94 42 L96 58 Z"/>
+            <path d="M141 38 Q149 44 146 56 L143 55 Q145 46 139 42 Z"/>
+          </g>
+          <path d="M165 16 q4 -4 8 0 M176 10 q4 -4 8 0" fill="none" stroke="#f5c542" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="10" y1="62" x2="190" y2="62" stroke="rgba(242,239,233,0.35)" stroke-width="1.5"/>
+        </svg>
+      </div>
+
+      <div class="agenda-col">
+        <div class="day"><span>Wed</span><span class="dn">02</span></div>
+        <h3>Fund I</h3>
+        <ul>
+          <li>Fund I portfolio company visit</li>
+          <li>"Kick the tires" - participant-led IC* session</li>
+          <li>Group dinner with inspirational local speakers in Nairobi city center</li>
+        </ul>
+        <svg class="agenda-art" viewBox="0 0 160 70" xmlns="http://www.w3.org/2000/svg" aria-label="Company operations — factory and laptop">
+          <path d="M16 60 V36 L36 24 V36 L56 24 V36 L76 24 V60 Z" fill="none" stroke="#f5c542" stroke-width="1.6"/>
+          <rect x="22" y="14" width="7" height="12" fill="none" stroke="#f5c542" stroke-width="1.6"/>
+          <circle cx="26" cy="8" r="2.5" fill="rgba(242,239,233,0.4)"/>
+          <circle cx="33" cy="4" r="2" fill="rgba(242,239,233,0.28)"/>
+          <rect x="100" y="36" width="34" height="18" rx="2" fill="none" stroke="#f5c542" stroke-width="1.6"/>
+          <line x1="106" y1="42" x2="128" y2="42" stroke="rgba(242,239,233,0.4)" stroke-width="1.2"/>
+          <line x1="106" y1="47" x2="122" y2="47" stroke="rgba(242,239,233,0.4)" stroke-width="1.2"/>
+          <path d="M94 60 h46" stroke="#f5c542" stroke-width="1.6"/>
+          <line x1="10" y1="64" x2="150" y2="64" stroke="rgba(242,239,233,0.35)" stroke-width="1.5"/>
+        </svg>
+        <div class="fn">*Investment committee</div>
+      </div>
+
+      <div class="agenda-col">
+        <div class="day"><span>Thu</span><span class="dn">03</span></div>
+        <h3>Fund II</h3>
+        <ul>
+          <li>Guided Nairobi walking tour including history &amp; political economy context.</li>
+          <li>Fund II - manager session</li>
+          <li>Evening self-organized</li>
+        </ul>
+        <svg class="agenda-art" viewBox="0 0 160 70" xmlns="http://www.w3.org/2000/svg" aria-label="Nairobi skyline">
+          <circle cx="132" cy="22" r="9" fill="rgba(242,239,233,0.35)"/>
+          <g fill="#f5c542" opacity="0.9">
+            <rect x="16" y="38" width="10" height="22"/>
+            <rect x="30" y="28" width="9" height="32"/>
+            <rect x="44" y="22" width="12" height="38" rx="2"/>
+            <ellipse cx="50" cy="22" rx="9" ry="3"/>
+            <rect x="62" y="34" width="9" height="26"/>
+            <rect x="76" y="42" width="11" height="18"/>
+            <polygon points="96,60 96,32 102,22 108,32 108,60"/>
+          </g>
+          <line x1="10" y1="64" x2="150" y2="64" stroke="rgba(242,239,233,0.35)" stroke-width="1.5"/>
+        </svg>
+      </div>
+
+      <div class="agenda-col">
+        <div class="day"><span>Fri</span><span class="dn">04</span></div>
+        <h3>Conviction &amp; Close</h3>
+        <ul>
+          <li>Fund II portfolio company visit</li>
+          <li>
+            <span class="bp">• Participant-led IC discussion</span>
+            <span class="bp">• Wrap-up: take-aways, next steps, and peer commitments</span>
+          </li>
+          <li>Closing Kenyan tasting-menu dinner</li>
+        </ul>
+        <svg class="agenda-art" viewBox="0 0 140 70" xmlns="http://www.w3.org/2000/svg" aria-label="Kenyan dinner menu">
+          <rect x="50" y="6" width="44" height="56" rx="3" fill="none" stroke="#f5c542" stroke-width="1.6"/>
+          <line x1="58" y1="17" x2="86" y2="17" stroke="#f5c542" stroke-width="2"/>
+          <line x1="58" y1="27" x2="86" y2="27" stroke="rgba(242,239,233,0.4)" stroke-width="1.2"/>
+          <line x1="58" y1="33" x2="80" y2="33" stroke="rgba(242,239,233,0.4)" stroke-width="1.2"/>
+          <line x1="58" y1="39" x2="86" y2="39" stroke="rgba(242,239,233,0.4)" stroke-width="1.2"/>
+          <line x1="58" y1="45" x2="76" y2="45" stroke="rgba(242,239,233,0.4)" stroke-width="1.2"/>
+          <line x1="58" y1="51" x2="84" y2="51" stroke="rgba(242,239,233,0.4)" stroke-width="1.2"/>
+          <path d="M24 14 v10 M20 14 v10 M28 14 v10 M20 24 h8 M24 24 v24" fill="none" stroke="#f5c542" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M110 14 q7 9 0 17 v17" fill="none" stroke="#f5c542" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+    </div>
+    <div class="footer"><span>Last Mile</span><span>04 / 07</span></div>
+  </section>
+
+  <!-- 5 · THE TWO FUNDS -->
+  <section class="slide">
+    <div class="kicker"><span class="num">05</span><span class="rule"></span><span>The Diligence</span></div>
+    <div class="funds-head"><h2>Two live funds. One question: would you invest?</h2></div>
+    <div class="funds-wrap">
+      <div class="fund">
+        <span class="label">Fund I</span>
+        <h3>Impact Fund I</h3>
+        <p class="sub">A live, fundraising impact fund - diligenced end-to-end by the cohort.</p>
+        <div class="blocks">
+          <div class="block">
+            <span class="bn">01</span>
+            <div>
+              <h4>GP Session</h4>
+              <div class="dur">Half day · Manager office</div>
+              <p>Presentation and working session with the General Partner - test claims, challenge assumptions, probe the data room.</p>
+            </div>
+          </div>
+          <div class="block">
+            <span class="bn">02</span>
+            <div>
+              <h4>Portfolio Visits</h4>
+              <div class="dur">Half day · On the ground</div>
+              <p>One to two investee company visits - verifying the thesis where the numbers can't: on site, with founders and operators.</p>
+            </div>
+          </div>
+          <div class="block">
+            <span class="bn">03</span>
+            <div>
+              <h4>"Kick the Tires"</h4>
+              <div class="dur">IC session · Without the GP</div>
+              <p>A participant-led investment committee. Stepping into LP shoes, the cohort decides: would we invest - and on what terms?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fund">
+        <span class="label">Fund II</span>
+        <h3>Impact Fund II</h3>
+        <p class="sub">A second live fund - a contrasting strategy, the same rigorous process.</p>
+        <div class="blocks">
+          <div class="block">
+            <span class="bn">01</span>
+            <div>
+              <h4>GP Session</h4>
+              <div class="dur">Half day · Manager office</div>
+              <p>Presentation and working session with the General Partner - test claims, challenge assumptions, probe the data room.</p>
+            </div>
+          </div>
+          <div class="block">
+            <span class="bn">02</span>
+            <div>
+              <h4>Portfolio Visits</h4>
+              <div class="dur">Half day · On the ground</div>
+              <p>One to two investee company visits - verifying the thesis where the numbers can't: on site, with founders and operators.</p>
+            </div>
+          </div>
+          <div class="block">
+            <span class="bn">03</span>
+            <div>
+              <h4>"Kick the Tires"</h4>
+              <div class="dur">IC session · Without the GP</div>
+              <p>A participant-led investment committee. Stepping into LP shoes, the cohort decides: would we invest - and on what terms?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>Last Mile</span><span>05 / 07</span></div>
+  </section>
+
+  <!-- 6 · FACULTY -->
+  <section class="slide">
+    <div class="kicker"><span class="num">06</span><span class="rule"></span><span>Faculty</span></div>
+    <div class="fac-head"><h2>Led by two of the field's most <em>credible practitioners.</em></h2></div>
+    <div class="fac-wrap">
+      <!-- A: top-left · Philip text -->
+      <div class="fac">
+        <span class="role" style="color:var(--yellow)">Founder &amp; Principal · NXT-ALT</span>
+        <h3>Philip Walker</h3>
+        <p>Fund DD expert with 15+ years across institutions including SIFEM (Switzerland's DFI), the Dutch Ministry of Foreign Affairs (via Triple Jump), and NXT-ALT - over 40 DDs led across Africa and other frontier markets, from sustainable forestry in Tanzania to tech in Bangalore.</p>
+        <div class="creds">Adviser to government, Fortune 500 foundations &amp; global family offices · Teaches impact fund diligence at MIT/St Gallen</div>
+      </div>
+      <!-- B: top-right · Philip photo -->
+      <div class="fac-photo-cell">
+        <img src="Philip photo.jpg" alt="Philip Walker">
+      </div>
+      <!-- C: bottom-left · James text -->
+      <div class="fac">
+        <span class="role" style="color:var(--yellow)">Founder &amp; CEO · Additionality</span>
+        <h3>Dr James Gifford</h3>
+        <p>Founding architect of the UN Principles for Responsible Investment, scaled to 4,000+ signatories representing over USD 100 trillion in AUM. Former Head of Sustainable &amp; Impact Advisory at UBS and Credit Suisse, where he led impact due diligence for dozens of funds over 20+ years in the field.</p>
+        <div class="creds">PhD in sustainable investing · Part of the team at the UN that coined the term "ESG" in 2004 · Founder UNPRI · Lecturer CSP</div>
+      </div>
+      <!-- D: bottom-right · James photo -->
+      <div class="fac-photo-cell">
+        <img src="James photo.png" alt="Dr James Gifford">
+      </div>
+    </div>
+    <div class="footer"><span>Last Mile</span><span>06 / 07</span></div>
+  </section>
+
+  <!-- 7 · CTA -->
+  <section class="slide cta">
+    <div class="kicker"><span class="num">07</span><span class="rule"></span><span>Express Interest</span></div>
+    <div class="cta-wrap">
+      <div class="cta-left">
+        <h2>Conviction is earned<br>on the ground.</h2>
+        <p class="sub">The Nairobi pilot cohort is limited to 8–10 participants, admitted by application. Future programs are in development for Mumbai (H1 2027), Lagos (H2 2027), and Ho Chi Minh City (H1 2028).</p>
+        <div class="pills">
+          <span>Cohort · 8–10 Participants</span>
+          <span>Nairobi · H2 2026</span>
+        </div>
+        <div class="price-block">
+          <span class="price-label">Program Fee · Per Participant</span>
+          <div class="price-amount">USD 8'750</div>
+        </div>
+        <div style="flex:1; min-height:2vh;"></div>
+        <p class="contact">Enquiries - Dr James Gifford · <span class="mail">james.gifford@additionality.co</span></p>
+        <p class="contact" style="margin-top:1.2vh">Enquiries - Khalil Aouani Cherif · <span class="mail">khalil.cherif@additionality.co</span></p>
+      </div>
+      <div class="cities-grid">
+        <div class="city-cell">
+          <div class="city-img">
+            <img src="Nairobi photo.jpg" alt="Nairobi" style="width: 100%; height: 100%; object-fit: cover;" />
+          </div>
+          <div class="city-label">
+            <div class="city-name">Nairobi</div>
+            <div class="city-period">Pilot · H2 2026</div>
+          </div>
+        </div>
+        <div class="city-cell">
+          <div class="city-img">
+            <img src="Mumbai photo.jpg" alt="Mumbai" style="width: 100%; height: 100%; object-fit: cover;" />
+          </div>
+          <div class="city-label">
+            <div class="city-name">Mumbai</div>
+            <div class="city-period">H1 2027</div>
+          </div>
+        </div>
+        <div class="city-cell">
+          <div class="city-img">
+            <img src="Lagos photo.jpg" alt="Lagos" style="width: 100%; height: 100%; object-fit: cover;" />
+          </div>
+          <div class="city-label">
+            <div class="city-name">Lagos</div>
+            <div class="city-period">H2 2027</div>
+          </div>
+        </div>
+        <div class="city-cell">
+          <div class="city-img">
+            <img src="Ho Chi Minh City Photo.jpg" alt="Ho Chi Minh City" style="width: 100%; height: 100%; object-fit: cover;" />
+          </div>
+          <div class="city-label">
+            <div class="city-name">Ho Chi Minh City</div>
+            <div class="city-period">H1 2028</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer" style="width:100%"><span>© 2026 Additionality · Last Mile</span><span>07 / 07</span></div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" aria-label="Previous">←</button>
+  <button id="next" aria-label="Next">→</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    document.getElementById('progress').style.width = ((i+1)/slides.length*100) + '%';
+  }
+  document.getElementById('next').onclick = () => show(i+1);
+  document.getElementById('prev').onclick = () => show(i-1);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') show(i+1);
+    if (e.key === 'ArrowLeft') show(i-1);
+  });
+  show(0);
+</script>
+</body>
+</html>
